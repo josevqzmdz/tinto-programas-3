@@ -1,5 +1,11 @@
 # create-svelte
 
+## Seed the database
+To upload data to the database from a CSV file, run the seed script:
+```bash
+npm run seed
+```
+
 ## Before running
 
 Make sure to install dependencies
