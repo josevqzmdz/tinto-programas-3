@@ -12,13 +12,13 @@ datasource db {
 
 model Order {
   id           Int       @id @default(autoincrement())
-  order_number Int       @unique
+  order_number String
   date         String
-  phone        String
+  phone        String?
   address      String?
-  delivery     Boolean
+  delivery     Boolean  @default(false)
   notes        String?
-  total        Int
+  total        String?
   name         String
   articles     Article[]
 }
@@ -26,9 +26,9 @@ model Order {
 model Article {
   id           Int    @id @default(autoincrement())
   article_name String
-  color        String
-  unit_price   Int
-  quantity     Int
+  color        String?
+  unit_price   String?
+  quantity     Int?
 
   Order   Order? @relation(fields: [orderId], references: [id])
   orderId Int?
