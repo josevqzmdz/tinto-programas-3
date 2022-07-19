@@ -1,6 +1,7 @@
 {
 	"name": "titos",
 	"version": "0.0.1",
+	"liveServer.settings.port": 2500,
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"seed": "node ./prisma/seed.js",

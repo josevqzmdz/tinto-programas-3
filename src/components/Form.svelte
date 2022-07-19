@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Order } from '../types';
+	//import Table from 'src/routes/table.svelte';
+import type { Order } from '../types';
 
 	$: order.total = order.articles.reduce((prev, curr) => {
 		return curr.unit_price * curr.quantity + prev;
@@ -63,7 +64,28 @@
 		color: '',
 		unit_price: 0
 	};
+
+	let var_window;
+			function obtenerExcel(){
+				var_window = window.open("file://");
+				
+			}
+
+	let fileinput: { click: () => void; }, avatar;
+
+	// https://stackoverflow.com/questions/43064221/typescript-ts7006-parameter-xxx-implicitly-has-an-any-type
+	const onFileSelected =(e: any)=>{
+		let image = e.target.files[0];
+		let reader = new FileReader();
+		reader.readAsDataURL(image);
+		reader.onload = e =>{
+				// https://stackoverflow.com/questions/49431880/ts2531-object-is-possibly-null
+				avatar = e?.target?.result
+		};
+	}
 </script>
+
+
 
 <div class="flex flex-col space-y-8 mx-auto px-8">
 	<form on:submit|preventDefault={handleArticle}>
@@ -167,7 +189,25 @@
 			disabled
 		/>
 
+
+		<!--
+			Boton para guardar exceles en base de datos
+			1) https://svelte.dev/repl/b17c13d4f1bb40799ccf09e0841ddd90?version=3.49.0
+
+		-->
 		<button type="submit">Guardar orden</button>
+		
+		<!-- boton para subir los exceles a la db
+		https://stackoverflow.com/questions/58262380/how-to-pass-parameters-to-onclick-in-svelte
+		
+		-->
+		<!-- https://stackoverflow.com/questions/51977823/type-void-is-not-assignable-to-type-event-mouseeventhtmlinputelement-->
+
+		<div class="btn-obtener-excel">
+			<button type="button" on:click={()=>{fileinput.click();}} >Obtener Excel</button>
+			<input style="display:none" type="file" accept =".xlsx .csv" on:change={(e)=>onFileSelected(e)} bind:this={fileinput} >
+			<!-- <input type="text" class="form-control" onclick={obtenerExcel}/> -->
+		</div>
 	</form>
 </div>
 
