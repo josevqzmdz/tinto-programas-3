@@ -1,6 +1,10 @@
 <script lang="ts">
 	//import Table from 'src/routes/table.svelte';
+//import readXlsxFile from 'read-excel-file'
 import type { Order } from '../types';
+// https://www.npmjs.com/package/exceljs
+// import  ExcelJS  from 'exceljs';
+// https://stackoverflow.com/questions/19059580/client-on-node-js-uncaught-referenceerror-require-is-not-defined
 
 	$: order.total = order.articles.reduce((prev, curr) => {
 		return curr.unit_price * curr.quantity + prev;
@@ -71,7 +75,7 @@ import type { Order } from '../types';
 				
 			}
 
-	let fileinput: { click: () => void; }, avatar;
+	let fileinput: { click: () => void; }, excel;
 
 	// https://stackoverflow.com/questions/43064221/typescript-ts7006-parameter-xxx-implicitly-has-an-any-type
 	const onFileSelected =(e: any)=>{
@@ -80,9 +84,32 @@ import type { Order } from '../types';
 		reader.readAsDataURL(image);
 		reader.onload = e =>{
 				// https://stackoverflow.com/questions/49431880/ts2531-object-is-possibly-null
-				avatar = e?.target?.result
+				excel = e?.target?.result
+				//leerExcel(excel);
 		};
+
 	}
+
+	/*
+	function leerExcel(excel: any){
+		// create workbook
+		const wb = new ExcelJS.Workbook();
+	
+		// set workbook properties
+		wb.creator = "jose miguel";
+
+		wb.calcProperties.fullCalcOnLoad = true;
+
+		// add worksheet
+		const sheet = wb.addWorksheet(excel);
+
+		
+	}
+	*/
+
+	
+
+
 </script>
 
 
@@ -205,7 +232,7 @@ import type { Order } from '../types';
 
 		<div class="btn-obtener-excel">
 			<button type="button" on:click={()=>{fileinput.click();}} >Obtener Excel</button>
-			<input style="display:none" type="file" accept =".xlsx .csv" on:change={(e)=>onFileSelected(e)} bind:this={fileinput} >
+			<input style="display:none" type="file" on:change={(e)=>onFileSelected(e)} bind:this={fileinput} >
 			<!-- <input type="text" class="form-control" onclick={obtenerExcel}/> -->
 		</div>
 	</form>

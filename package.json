@@ -41,6 +41,8 @@
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "^4.0.0",
-		"json2csv": "^5.0.7"
+		"exceljs": "^4.3.0",
+		"json2csv": "^5.0.7",
+		"read-excel-file": "^5.4.2"
 	}
 }
