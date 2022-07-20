@@ -1,7 +1,9 @@
+
 <script lang="ts">
 	//import Table from 'src/routes/table.svelte';
 //import readXlsxFile from 'read-excel-file'
 import type { Order } from '../types';
+import Papaparse from 'papaparse';
 // https://www.npmjs.com/package/exceljs
 // import  ExcelJS  from 'exceljs';
 // https://stackoverflow.com/questions/19059580/client-on-node-js-uncaught-referenceerror-require-is-not-defined
@@ -76,6 +78,7 @@ import type { Order } from '../types';
 			}
 
 	let fileinput: { click: () => void; }, excel;
+	
 
 	// https://stackoverflow.com/questions/43064221/typescript-ts7006-parameter-xxx-implicitly-has-an-any-type
 	const onFileSelected =(e: any)=>{
@@ -85,9 +88,16 @@ import type { Order } from '../types';
 		reader.onload = e =>{
 				// https://stackoverflow.com/questions/49431880/ts2531-object-is-possibly-null
 				excel = e?.target?.result
-				//leerExcel(excel);
 		};
-
+		let papa = Papaparse.parse(image, {
+			header: true,
+			dynamicTyping: true,
+			download: true,
+			complete: function (results){
+				console.log(results);			
+			}
+		});
+		console.log(papa);
 	}
 
 	/*
@@ -106,9 +116,6 @@ import type { Order } from '../types';
 		
 	}
 	*/
-
-	
-
 
 </script>
 
